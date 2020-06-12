@@ -1,0 +1,51 @@
+import elementos.*
+import plagas.*
+
+describe "Test, funcionalidad de Elementos"{
+	const hogar = new Hogar(mugre = 5,nivelConfort = 12)
+	const huerta = new Huerta(capacidadProduccion = 10)
+	const firulais = new Mascota(nivelDeSalud = 300)
+	const barrio = new Barrio()
+	
+	fixture{
+		barrio.addElemento(hogar)
+		barrio.addElemento(huerta)
+		barrio.addElemento(firulais)
+	}
+	
+	test "Probando el Hogar"{
+		assert.that(hogar.esBueno())
+		hogar.mugre(hogar.mugre() + 10)
+		assert.notThat(hogar.esBueno())
+	}
+	
+	test "Probando la Huerta"{
+		assert.that(huerta.esBueno())
+		huerta.capacidadProduccion(5)
+		assert.notThat(huerta.esBueno())
+	}
+	
+	test "Probando las Mascotas"{
+		assert.that(firulais.esBueno())
+		firulais.nivelDeSalud(250)
+		assert.notThat(firulais.esBueno())
+	}
+	
+	test "Probando el Barrio"{
+		assert.that(barrio.esCopado())
+		hogar.mugre(hogar.mugre() + 10)
+		firulais.nivelDeSalud(250)
+		assert.notThat(barrio.esCopado())
+	}
+}
+
+describe "Test, ataque hacía los elementos"{
+	const cucaracha = new Cucarachas(poblacion = 20, pesoPromedio = 10) 
+	const firulais = new Mascota(nivelDeSalud = 300)
+	
+	test "Atacan a firulais"{
+		assert.equals(firulais.nivelDeSalud(), 300)
+		firulais.recibirAtaque(cucaracha)
+		assert.equals(firulais.nivelDeSalud(), 290)
+	}
+}
